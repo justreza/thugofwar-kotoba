@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarik Tambang Kuda Kanji</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .screen { display: none; }
+        .active { display: block; }
+
+        h1 { color: #333; }
+
+        /* Tombol Umum */
+        .menu-btn {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            transition: 0.2s;
+        }
+        .btn-n5 { background-color: #4CAF50; }
+        .btn-n4 { background-color: #2196F3; }
+        .btn-n3 { background-color: #f44336; }
+        .btn-gray { background-color: #757575; }
+        .btn-orange { background-color: #ff9800; }
+        .menu-btn:hover { opacity: 0.8; transform: translateY(-2px); }
+
+        /* Arena Tarik Tambang */
+        #arena-container {
+            width: 90%;
+            max-width: 600px;
+            height: 120px;
+            margin: 30px auto;
+            background: #e8f5e9;
+            border: 3px solid #2e7d32;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .center-line {
+            position: absolute;
+            left: 50%;
+            top: 0; bottom: 0;
+            width: 4px;
+            background: rgba(0,0,0,0.3);
+            border-left: 2px dashed #fff;
+            z-index: 1;
+        }
+
+        /* Grup Kuda dan Tali */
+        #tug-group {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+        }
+
+        .rope {
+            position: absolute;
+            left: 40px; right: 40px;
+            height: 6px;
+            background-color: #8B4513;
+            z-index: -1;
+            box-shadow: 0 2px 2px rgba(0,0,0,0.3);
+        }
+
+        .horse {
+            font-size: 35px;
+            background: white;
+            border-radius: 50%;
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .horse-red { border: 4px solid #ff4d4d; }
+        .horse-blue { border: 4px solid #4d4dff; transform: scaleX(-1); }
+
+        /* Kuis Container */
+        #kanji-display {
+            font-size: 80px;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .option-btn {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            background: #fff;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .option-btn:hover { background: #e3f2fd; border-color: #2196F3; }
+        
+        .meaning-text {
+            font-size: 14px;
+            color: #555;
+            font-weight: normal;
+        }
+
+        .control-panel {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        #result-message { font-size: 30px; font-weight: bold; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- MENU SCREEN -->
+    <div id="menu-screen" class="screen active">
+        <h1>🐎 Tarik Tambang Kuda Kanji 🐎</h1>
+        <p>Pilih level Kanji Anda. Jawab dengan benar untuk menarik musuh, jawab salah musuh yang menarik Anda!</p>
+        <button class="menu-btn btn-n5" onclick="startGame('N5')">Main Level N5</button>
+        <button class="menu-btn btn-n4" onclick="startGame('N4')">Main Level N4</button>
+        <button class="menu-btn btn-n3" onclick="startGame('N3')">Main Level N3</button>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="game-screen" class="screen">
+        <h2 id="level-indicator">Level: --</h2>
+        
+        <div id="arena-container">
+            <div class="center-line"></div>
+            <div id="tug-group">
+                <div class="horse horse-red">🐴</div>
+                <div class="rope"></div>
+                <div class="horse horse-blue">🐴</div>
+            </div>
+        </div>
+
+        <div id="kanji-display">日</div>
+        
+        <div class="options-grid" id="options-container"></div>
+
+        <div class="control-panel">
+            <button class="menu-btn btn-gray" onclick="resetGame()">Reset</button>
+            <button class="menu-btn btn-orange" onclick="backToMenu()">Selesai</button>
+        </div>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div id="result-screen" class="screen">
+        <div id="result-message"></div>
+        <button class="menu-btn btn-n5" onclick="backToMenu()">Kembali ke Menu</button>
+    </div>
+
+    <script>
+        const kanjiDatabase = [
+            // ================= LEVEL N5 (High Frequency) =================
+            { kanji: '日', reading: 'ニチ / ひ', meaning: 'Hari / Matahari', level: 'N5' },
+            { kanji: '月', reading: 'ゲツ / つき', meaning: 'Bulan', level: 'N5' },
+            { kanji: '火', reading: 'カ / ひ', meaning: 'Api', level: 'N5' },
+            { kanji: '水', reading: 'スイ / みず', meaning: 'Air', level: 'N5' },
+            { kanji: '木', reading: 'モク / き', meaning: 'Pohon', level: 'N5' },
+            { kanji: '金', reading: 'キン / かね', meaning: 'Emas / Uang', level: 'N5' },
+            { kanji: '土', reading: 'ド / つち', meaning: 'Tanah', level: 'N5' },
+            { kanji: '本', reading: 'ホン / もと', meaning: 'Buku / Asal', level: 'N5' },
+            { kanji: '人', reading: 'ジン / ひと', meaning: 'Orang', level: 'N5' },
+            { kanji: '今', reading: 'コン / いま', meaning: 'Sekarang', level: 'N5' },
+            { kanji: '時', reading: 'ジ / とき', meaning: 'Jam / Waktu', level: 'N5' },
+            { kanji: '行', reading: 'コウ / いく', meaning: 'Pergi', level: 'N5' },
+            { kanji: '来', reading: 'ライ / くる', meaning: 'Datang', level: 'N5' },
+            { kanji: '食', reading: 'ショク / たべる', meaning: 'Makan', level: 'N5' },
+            { kanji: '飲', reading: 'イン / のむ', meaning: 'Minum', level: 'N5' },
+            { kanji: '見', reading: 'ケン / みる', meaning: 'Melihat', level: 'N5' },
+            { kanji: '聞', reading: 'ブン / きく', meaning: 'Mendengar', level: 'N5' },
+            { kanji: '読', reading: 'ドク / よむ', meaning: 'Membaca', level: 'N5' },
+            { kanji: '書', reading: 'ショ / かく', meaning: 'Menulis', level: 'N5' },
+            { kanji: '話', reading: 'ワ / はなす', meaning: 'Berbicara / Cerita', level: 'N5' },
+            { kanji: '買', reading: 'バイ / かう', meaning: 'Membeli', level: 'N5' },
+            { kanji: '出', reading: 'シュツ / でる', meaning: 'Keluar', level: 'N5' },
+            { kanji: '入', reading: 'ニュウ / はいる', meaning: 'Masuk', level: 'N5' },
+            { kanji: '休', reading: 'キュウ / やすむ', meaning: 'Istirahat / Libur', level: 'N5' },
+            { kanji: '高', reading: 'コウ / たかい', meaning: 'Tinggi / Mahal', level: 'N5' },
+            { kanji: '大', reading: 'ダイ / おおきい', meaning: 'Besar', level: 'N5' },
+            { kanji: '小', reading: 'ショウ / ちいさい', meaning: 'Kecil', level: 'N5' },
+            { kanji: '新', reading: 'シン / あたらしい', meaning: 'Baru', level: 'N5' },
+            { kanji: '古', reading: 'コ / ふるい', meaning: 'Tua / Lama', level: 'N5' },
+            { kanji: '長', reading: 'チョウ / ながい', meaning: 'Panjang / Ketua', level: 'N5' },
+            { kanji: '多', reading: 'タ / おおい', meaning: 'Banyak', level: 'N5' },
+            { kanji: '少', reading: 'ショウ / すくない', meaning: 'Sedikit', level: 'N5' },
+            { kanji: '白', reading: 'ハク / しろ', meaning: 'Putih', level: 'N5' },
+            { kanji: '黒', reading: 'コク / くろ', meaning: 'Hitam', level: 'N5' },
+            { kanji: '赤', reading: 'セキ / あか', meaning: 'Merah', level: 'N5' },
+            { kanji: '青', reading: 'セイ / あお', meaning: 'Biru', level: 'N5' },
+            { kanji: '車', reading: 'シャ / くるま', meaning: 'Mobil / Kendaraan', level: 'N5' },
+            { kanji: '駅', reading: 'エキ', meaning: 'Stasiun', level: 'N5' },
+            { kanji: '男', reading: 'ダン / おとこ', meaning: 'Pria', level: 'N5' },
+            { kanji: '女', reading: 'ジョ / おんな', meaning: 'Wanita', level: 'N5' },
+
+            // ================= LEVEL N4 (High Frequency) =================
+            { kanji: '悪', reading: 'アク / わるい', meaning: 'Buruk / Jahat', level: 'N4' },
+            { kanji: '医', reading: 'イ', meaning: 'Medis / Dokter', level: 'N4' },
+            { kanji: '歌', reading: 'カ / うた', meaning: 'Lagu / Menyanyi', level: 'N4' },
+            { kanji: '帰', reading: 'キ / かえる', meaning: 'Pulang / Kembali', level: 'N4' },
+            { kanji: '起', reading: 'キ / おきる', meaning: 'Bangun / Terjadi', level: 'N4' },
+            { kanji: '急', reading: 'キュウ / いそぐ', meaning: 'Cepat / Terburu-buru', level: 'N4' },
+            { kanji: '強', reading: 'キョウ / つよい', meaning: 'Kuat', level: 'N4' },
+            { kanji: '教', reading: 'キョウ / おしえる', meaning: 'Mengajar / Agama', level: 'N4' },
+            { kanji: '近', reading: 'キン / ちかい', meaning: 'Dekat', level: 'N4' },
+            { kanji: '銀', reading: 'ギン', meaning: 'Perak / Bank/ATM', level: 'N4' },
+            { kanji: '計', reading: 'ケイ / はかる', meaning: 'Rencana / Total', level: 'N4' },
+            { kanji: '兄', reading: 'キョウ / あに', meaning: 'Kakak Laki-laki', level: 'N4' },
+            { kanji: '姉', reading: 'シ / あね', meaning: 'Kakak Perempuan', level: 'N4' },
+            { kanji: '弟', reading: 'テイ / おとうと', meaning: 'Adik Laki-laki', level: 'N4' },
+            { kanji: '妹', reading: 'マイ / いもうと', meaning: 'Adik Perempuan', level: 'N4' },
+            { kanji: '思', reading: 'シ / おもう', meaning: 'Berpikir', level: 'N4' },
+            { kanji: '使', reading: 'シ / つかう', meaning: 'Menggunakan', level: 'N4' },
+            { kanji: '私', reading: 'シ / わたし', meaning: 'Saya', level: 'N4' },
+            { kanji: '事', reading: 'ジ / こと', meaning: 'Hal / Perkara', level: 'N4' },
+            { kanji: '借', reading: 'シャク / かりる', meaning: 'Meminjam', level: 'N4' },
+            { kanji: '春', reading: 'シュン / はる', meaning: 'Musim Semi', level: 'N4' },
+            { kanji: '夏', reading: 'カ / なつ', meaning: 'Musim Panas', level: 'N4' },
+            { kanji: '秋', reading: 'シュウ / あき', meaning: 'Musim Gugur', level: 'N4' },
+            { kanji: '冬', reading: 'トウ / ふゆ', meaning: 'Musim Dingin', level: 'N4' },
+            { kanji: '習', reading: 'シュウ / ならう', meaning: 'Belajar', level: 'N4' },
+            { kanji: '乗', reading: 'ジョウ / のる', meaning: 'Naik (Kendaraan)', level: 'N4' },
+            { kanji: '親', reading: 'シン / おや', meaning: 'Orang Tua / Akrab', level: 'N4' },
+            { kanji: '切', reading: 'セツ / きる', meaning: 'Potong / Penting', level: 'N4' },
+            { kanji: '送', reading: 'ソウ / おくる', meaning: 'Kirim', level: 'N4' },
+            { kanji: '早', reading: 'ソウ / はやい', meaning: 'Cepat / Pagi', level: 'N4' },
+            { kanji: '走', reading: 'ソウ / はしる', meaning: 'Lari', level: 'N4' },
+            { kanji: '待', reading: 'タイ / まつ', meaning: 'Tunggu', level: 'N4' },
+            { kanji: '朝', reading: 'チョウ / あさ', meaning: 'Pagi', level: 'N4' },
+            { kanji: '昼', reading: 'チュウ / ひる', meaning: 'Siang', level: 'N4' },
+            { kanji: '夜', reading: 'ヤ / よる', meaning: 'Malam', level: 'N4' },
+            { kanji: '働', reading: 'ドウ / はたらく', meaning: 'Bekerja', level: 'N4' },
+            { kanji: '病', reading: 'ビョウ', meaning: 'Sakit', level: 'N4' },
+            { kanji: '勉', reading: 'ベン', meaning: 'Berusaha / Belajar Giat', level: 'N4' },
+            { kanji: '歩', reading: 'ホ / あるく', meaning: 'Jalan', level: 'N4' },
+            { kanji: '薬', reading: 'ヤク / くすり', meaning: 'Obat', level: 'N4' },
+
+            // ================= LEVEL N3 (High Frequency) =================
+            { kanji: '愛', reading: 'アイ / あいする', meaning: 'Cinta / Kasih sayang', level: 'N3' },
+            { kanji: '案', reading: 'アン', meaning: 'Rencana / Ide / Usulan', level: 'N3' },
+            { kanji: '違', reading: 'イ / ちがう', meaning: 'Berbeda / Salah', level: 'N3' },
+            { kanji: '関', reading: 'カン / かかわる', meaning: 'Hubungan / Terkait', level: 'N3' },
+            { kanji: '信', reading: 'シン', meaning: 'Percaya / Pesan', level: 'N3' },
+            { kanji: '達', reading: 'タツ / たち', meaning: 'Mencapai / Mahir', level: 'N3' },
+            { kanji: '残', reading: 'ザン / のこる', meaning: 'Sisa / Meninggalkan', level: 'N3' },
+            { kanji: '念', reading: 'ネン', meaning: 'Pikiran / Perasaan', level: 'N3' },
+            { kanji: '笑', reading: 'ショウ / わらう', meaning: 'Tersenyum / Tertawa', level: 'N3' },
+            { kanji: '苦', reading: 'ク / くるしい', meaning: 'Pahit / Susah', level: 'N3' },
+            { kanji: '覚', reading: 'カク / おぼえる', meaning: 'Ingat / Sadar', level: 'N3' },
+            { kanji: '解', reading: 'カイ / とく', meaning: 'Mengerti / Solusi', level: 'N3' },
+            { kanji: '感', reading: 'カン', meaning: 'Perasaan / Kesan', level: 'N3' },
+            { kanji: '観', reading: 'カン / みる', meaning: 'Menonton / Pandangan', level: 'N3' },
+            { kanji: '記', reading: 'キ / しるす', meaning: 'Mencatat / Menulis', level: 'N3' },
+            { kanji: '期', reading: 'キ / ゴ', meaning: 'Periode / Jangka Waktu', level: 'N3' },
+            { kanji: '機', reading: 'キ / はた', meaning: 'Mesin / Peluang', level: 'N3' },
+            { kanji: '決', reading: 'ケツ / きめる', meaning: 'Memutuskan', level: 'N3' },
+            { kanji: '結', reading: 'ケツ / むすぶ', meaning: 'Ikat / Hubung / Hasil', level: 'N3' },
+            { kanji: '呼', reading: 'コ / よぶ', meaning: 'Memanggil / Bernapas', level: 'N3' },
+            { kanji: '向', reading: 'コウ / むく', meaning: 'Menghadap / Menuju', level: 'N3' },
+            { kanji: '幸', reading: 'コウ / さいわい', meaning: 'Bahagia / Beruntung', level: 'N3' },
+            { kanji: '最', reading: 'サイ / もっとも', meaning: 'Paling / Ter-', level: 'N3' },
+            { kanji: '昨', reading: 'サク', meaning: 'Kemarin', level: 'N3' },
+            { kanji: '守', reading: 'シュ / まもる', meaning: 'Melindungi / Menjaga', level: 'N3' },
+            { kanji: '悲', reading: 'ヒ / かなしい', meaning: 'Sedih / Berduka', level: 'N3' },
+            { kanji: '美', reading: 'ビ / うつくしい', meaning: 'Indah / Cantik / Elok', level: 'N3' },
+            { kanji: '負', reading: 'フ / まける', meaning: 'Kalah / Memikul', level: 'N3' },
+            { kanji: '初', reading: 'ショ / はじめ', meaning: 'Pertama kali / Awal', level: 'N3' },
+            { kanji: '済', reading: 'サイ / すむ', meaning: 'Selesai / Melunasi', level: 'N3' },
+            { kanji: '打', reading: 'ダ / うつ', meaning: 'Memukul / Mengetik', level: 'N3' },
+            { kanji: '忘', reading: 'ボウ / わすれる', meaning: 'Lupa / Mengabaikan', level: 'N3' },
+            { kanji: '忙', reading: 'ボウ / いそがしい', meaning: 'Sibuk', level: 'N3' },
+            { kanji: '落', reading: 'ラク / おちる', meaning: 'Jatuh / Turun / Gagal', level: 'N3' },
+            { kanji: '流', reading: 'リュウ / ながれる', meaning: 'Mengalir / Hanyut', level: 'N3' },
+            { kanji: '両', reading: 'リョウ', meaning: 'Kedua Belah Sisi', level: 'N3' },
+            { kanji: '冷', reading: 'レイ / つめたい', meaning: 'Dingin (Benda)', level: 'N3' },
+            { kanji: '恋', reading: 'レン / こい', meaning: 'Cinta Romantis / Asmara', level: 'N3' },
+            { kanji: '練', reading: 'レン / ねる', meaning: 'Melatih / Mengembangkan', level: 'N3' },
+            { kanji: '連', reading: 'レン / つれる', meaning: 'Membawa / Hubung', level: 'N3' }
+        ];
+
+        let currentData = [];
+        let currentQuestion = null;
+        let scorePosition = 0; 
+
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function startGame(level) {
+            currentData = kanjiDatabase.filter(k => k.level === level);
+            document.getElementById('level-indicator').innerText = `Level: ${level} (Kuda Merah vs Kuda Biru)`;
+            
+            scorePosition = 0;
+            updateArena();
+
+            switchScreen('game-screen');
+            loadNextQuestion();
+        }
+
+        function loadNextQuestion() {
+            const correctIndex = Math.floor(Math.random() * currentData.length);
+            currentQuestion = currentData[correctIndex];
+
+            let wrongOptions = currentData.filter((_, idx) => idx !== correctIndex);
+            wrongOptions.sort(() => 0.5 - Math.random()); 
+            wrongOptions = wrongOptions.slice(0, 3);
+
+            let allOptions = [currentQuestion, ...wrongOptions];
+            allOptions.sort(() => 0.5 - Math.random());
+
+            document.getElementById('kanji-display').innerText = currentQuestion.kanji;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            allOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${opt.reading}</span><span class="meaning-text">(${opt.meaning})</span>`;
+                btn.onclick = () => checkAnswer(opt.kanji);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedKanji) {
+            if (selectedKanji === currentQuestion.kanji) {
+                scorePosition += 1; 
+            } else {
+                scorePosition -= 1;
+            }
+
+            updateArena();
+
+            if (scorePosition >= 4) {
+                setTimeout(() => endGame(true), 300); 
+            } else if (scorePosition <= -4) {
+                setTimeout(() => endGame(false), 300);
+            } else {
+                loadNextQuestion();
+            }
+        }
+
+        function updateArena() {
+            const tugGroup = document.getElementById('tug-group');
+            const newLeft = 50 - (scorePosition * 8); 
+            tugGroup.style.left = `${newLeft}%`;
+        }
+
+        function endGame(isWin) {
+            switchScreen('result-screen');
+            const resultMsg = document.getElementById('result-message');
+            if (isWin) {
+                resultMsg.innerText = "🎉 Kamu Menang! Kudamu berhasil menarik musuh! 🎉";
+                resultMsg.style.color = "#4CAF50";
+            } else {
+                resultMsg.innerText = "💥 Kamu Kalah! Kudamu terseret oleh musuh! 💥";
+                resultMsg.style.color = "#f44336";
+            }
+        }
+
+        function resetGame() {
+            if (currentData.length > 0) {
+                startGame(currentData[0].level);
+            }
+        }
+
+        function backToMenu() {
+            switchScreen('menu-screen');
+        }
+    </script>
+</body>
+</html>
