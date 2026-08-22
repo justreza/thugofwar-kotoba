@@ -36,21 +36,47 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
             max-width: 1000px;
             margin: 20px auto;
+            text-align: left;
         }
 
-        h1 { 
-            font-size: 34px; 
-            margin-bottom: 5px; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(255,255,255,0.4);
+        .form-group {
+            margin-bottom: 20px;
         }
-        .subtitle { color: #94a3b8; font-weight: 600; letter-spacing: 3px; margin-bottom: 30px; font-size: 14px; }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .form-input, .form-select {
+            width: 100%;
+            padding: 14px 18px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: #ffffff;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.3s;
+        }
+        .form-input:focus, .form-select:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+        }
+        .form-select option {
+            background: #1e1b4b;
+            color: #ffffff;
+        }
 
         .menu-btn {
             font-family: 'Poppins', sans-serif;
-            padding: 16px 36px;
-            margin: 10px;
+            width: 100%;
+            padding: 16px;
+            margin-top: 10px;
             font-size: 16px;
             font-weight: 700;
             border: none;
@@ -60,15 +86,14 @@
             transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
+            background: linear-gradient(45deg, #00dbde, #fc00ff);
+            box-shadow: 0 0 20px rgba(0, 219, 222, 0.4);
         }
-        .btn-n5 { background: linear-gradient(45deg, #10b981, #059669); box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
-        .btn-n4 { background: linear-gradient(45deg, #3b82f6, #2563eb); box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
-        .btn-n3 { background: linear-gradient(45deg, #ef4444, #dc2626); box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); }
-        .btn-gray { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
-        .btn-orange { background: linear-gradient(45deg, #f59e0b, #d97706); box-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
-        
-        .menu-btn:hover { transform: translateY(-3px) scale(1.05); filter: brightness(1.2); }
+        .menu-btn:hover { transform: translateY(-3px) scale(1.02); filter: brightness(1.2); }
         .menu-btn:active { transform: translateY(0) scale(1); }
+
+        .btn-gray { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); width: auto; padding: 12px 30px; }
+        .btn-orange { background: linear-gradient(45deg, #f59e0b, #d97706); box-shadow: 0 0 15px rgba(245, 158, 11, 0.5); width: auto; padding: 12px 30px; }
 
         #arena-container {
             width: 100%;
@@ -79,7 +104,7 @@
             position: relative;
             overflow: hidden;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .boundary-line {
@@ -88,8 +113,8 @@
             width: 4px;
             z-index: 1;
         }
-        .left-line { left: 10%; background: #3b82f6; box-shadow: 0 0 15px #3b82f6, 0 0 30px #3b82f6; }
-        .right-line { right: 10%; background: #ef4444; box-shadow: 0 0 15px #ef4444, 0 0 30px #ef4444; }
+        .left-line { left: 10%; background: #3b82f6; box-shadow: 0 0 15px #3b82f6; }
+        .right-line { right: 10%; background: #ef4444; box-shadow: 0 0 15px #ef4444; }
         .center-line { left: 50%; transform: translateX(-50%); width: 2px; background: rgba(255,255,255,0.3); }
 
         #tug-group {
@@ -111,7 +136,6 @@
             height: 4px;
             background: rgba(255,255,255,0.2);
             z-index: -1;
-            box-shadow: 0 0 10px rgba(255,255,255,0.1);
         }
 
         .horse-icon {
@@ -120,34 +144,56 @@
             backdrop-filter: blur(5px);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 42px; /* Disesuaikan agar tidak terpotong border */
+            font-size: 42px;
             line-height: 1;
             user-select: none;
             box-sizing: border-box;
-            padding-bottom: 5px; /* Menyesuaikan posisi tengah emoji */
+            padding-bottom: 5px;
         }
         
-        /* Pemain 1 (Kiri) lari ke arah kiri -> Emoji Default menghadap kiri */
         .player-horse { 
             border: 3px solid #3b82f6; 
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), inset 0 0 12px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
             transform: scaleX(1); 
         }
         
-        /* Pemain 2 (Kanan) lari ke arah kanan -> Emoji di-flip menghadap kanan */
         .enemy-horse { 
             border: 3px solid #ef4444; 
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6), inset 0 0 12px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
             transform: scaleX(-1);
         }
 
+        .game-header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .timer-box {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 800;
+            color: #fca5a5;
+            font-size: 14px;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Perbaikan Kontras Kanji & Glowing */
         #kanji-target {
             font-family: 'Noto Sans JP', sans-serif;
-            font-size: 90px;
+            font-size: 85px;
             font-weight: 900;
             color: #ffffff;
-            margin: 15px 0;
-            text-shadow: 0 0 25px rgba(255,255,255,0.8), 0 0 45px rgba(255,255,255,0.4);
+            margin: 10px 0;
+            text-align: center;
+            background: linear-gradient(180deg, #ffffff 40%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.6));
         }
 
         .duel-container {
@@ -161,36 +207,36 @@
             flex: 1;
             background: rgba(0, 0, 0, 0.25);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 25px;
+            padding: 20px;
             border-radius: 20px;
         }
         .p1-board { box-shadow: inset 0 4px 20px rgba(59, 130, 246, 0.15); }
         .p2-board { box-shadow: inset 0 4px 20px rgba(239, 68, 68, 0.15); }
 
-        .board-title { font-size: 18px; font-weight: 800; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;}
+        .board-title { font-size: 16px; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;}
         .p1-title { color: #3b82f6; text-shadow: 0 0 10px rgba(59,130,246,0.5); }
         .p2-title { color: #ef4444; text-shadow: 0 0 10px rgba(239,68,68,0.5); }
 
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
         .option-btn {
             font-family: 'Noto Sans JP', 'Poppins', sans-serif;
-            padding: 18px 12px;
-            font-size: 22px;
+            padding: 15px 10px;
+            font-size: 20px;
             font-weight: 700;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             color: #f8fafc;
         }
         
@@ -200,10 +246,9 @@
         
         .meaning-text {
             font-family: 'Poppins', sans-serif;
-            font-size: 13px;
+            font-size: 12px;
             color: #94a3b8;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
         .control-panel {
@@ -214,16 +259,17 @@
         }
 
         #result-message { 
-            font-size: 45px; 
+            font-size: 38px; 
             font-weight: 900; 
-            margin-bottom: 35px; 
+            margin-bottom: 30px; 
             text-shadow: 0 0 25px currentColor; 
+            text-align: center;
         }
 
         @media (max-width: 768px) {
             .duel-container { flex-direction: column; }
             .options-grid { grid-template-columns: 1fr 1fr; }
-            #kanji-target { font-size: 70px; }
+            #kanji-target { font-size: 65px; }
             .glass-panel { padding: 20px; }
         }
     </style>
@@ -232,21 +278,38 @@
 
     <!-- SCREEN: MENU -->
     <div id="menu-screen" class="screen active">
-        <div class="glass-panel">
-            <h1>Neon Horse Racing</h1>
-            <p class="subtitle">KANJI DUEL ARENA</p>
-            <p style="font-size: 16px; color: #cbd5e1; margin-bottom: 45px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7;">
-                Pemain 1 (Kiri) vs Pemain 2 (Kanan). Jawab dengan tepat lebih cepat dari lawanmu untuk memacu kudamu ke garis finis.
-            </p>
-            <button class="menu-btn btn-n5" onclick="startGame('N5')">Duel Level N5</button>
-            <button class="menu-btn btn-n4" onclick="startGame('N4')">Duel Level N4</button>
-            <button class="menu-btn btn-n3" onclick="startGame('N3')">Duel Level N3</button>
+        <div class="glass-panel" style="max-width: 500px;">
+            <h2 style="font-size: 24px; text-align: center; margin-bottom: 25px; letter-spacing: 1px;">Persiapan Balapan</h2>
+            
+            <div class="form-group">
+                <label class="form-label">Mode Balapan:</label>
+                <select id="game-level" class="form-select">
+                    <option value="N5">Mode Kanji N5</option>
+                    <option value="N4">Mode Kanji N4</option>
+                    <option value="N3">Mode Kanji N3</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Rider 1:</label>
+                <input type="text" id="player1-name" class="form-input" placeholder="Masukkan nama rider 1..." value="Pemain 1">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Rider 2:</label>
+                <input type="text" id="player2-name" class="form-input" placeholder="Masukkan nama rider 2..." value="Pemain 2">
+            </div>
+
+            <button class="menu-btn" onclick="initGameSession()">Mulai Balapan!</button>
         </div>
     </div>
 
     <!-- SCREEN: GAME -->
     <div id="game-screen" class="screen">
-        <h2 id="level-indicator" style="color: #94a3b8; font-size: 18px; letter-spacing: 3px; font-weight: 800; margin-bottom: 15px;">LEVEL --</h2>
+        <div class="game-header-info" style="max-width: 1000px; margin: 0 auto 10px auto;">
+            <div id="level-indicator" style="color: #94a3b8; font-size: 14px; letter-spacing: 2px; font-weight: 800;">LEVEL --</div>
+            <div class="timer-box" id="timer-display">⏱️ 06s</div>
+        </div>
         
         <div class="glass-panel" style="padding: 25px;">
             <div id="arena-container">
@@ -255,7 +318,6 @@
                 <div class="boundary-line right-line"></div>
                 
                 <div id="tug-group">
-                    <!-- Kuda saling membelakangi -->
                     <div class="horse-icon player-horse">🏇</div>
                     <div class="rope"></div>
                     <div class="horse-icon enemy-horse">🏇</div>
@@ -267,13 +329,13 @@
             <div class="duel-container">
                 <!-- Papan Pemain 1 -->
                 <div class="player-board p1-board">
-                    <div class="board-title p1-title">Pemain 1 (Kuda Biru)</div>
+                    <div class="board-title p1-title" id="p1-title-label">Pemain 1</div>
                     <div class="options-grid" id="p1-options-container"></div>
                 </div>
 
                 <!-- Papan Pemain 2 -->
                 <div class="player-board p2-board">
-                    <div class="board-title p2-title">Pemain 2 (Kuda Merah)</div>
+                    <div class="board-title p2-title" id="p2-title-label">Pemain 2</div>
                     <div class="options-grid" id="p2-options-container"></div>
                 </div>
             </div>
@@ -288,10 +350,12 @@
 
     <!-- SCREEN: RESULT -->
     <div id="result-screen" class="screen">
-        <div class="glass-panel">
+        <div class="glass-panel" style="max-width: 600px; text-align: center;">
             <div id="result-message"></div>
-            <button class="menu-btn btn-gray" onclick="backToMenu()">Kembali ke Menu</button>
-            <button class="menu-btn btn-n4" onclick="resetGame()">Main Lagi</button>
+            <div style="display: flex; gap: 15px; justify-content: center;">
+                <button class="menu-btn btn-gray" style="width: auto;" onclick="backToMenu()">Kembali ke Menu</button>
+                <button class="menu-btn btn-orange" style="width: auto;" onclick="resetGame()">Main Lagi</button>
+            </div>
         </div>
     </div>
 
@@ -358,29 +422,29 @@
             { kanji: '以', reading: 'イ', meaning: 'Mulai dari / Melalui', level: 'N4' },
             { kanji: '引', reading: 'イン / ひく', meaning: 'Tarik / Kurang', level: 'N4' },
             { kanji: '運', reading: 'ウン / はこぶ', meaning: 'Nasib / Mengangkut', level: 'N4' },
-            { kanji: '映', reading: 'エイ / うつる', meaning: 'Refleksi / Proyeksi / Film', level: 'N4' },
+            { kanji: '映', reading: 'エイ / うつる', meaning: 'Refleksi / Proyeksi', level: 'N4' },
             { kanji: '遠', reading: 'エン / とおい', meaning: 'Jauh', level: 'N4' },
-            { kanji: '屋', reading: 'オク / や', meaning: 'Toko / Atap / Penjual', level: 'N4' },
+            { kanji: '屋', reading: 'オク / や', meaning: 'Toko / Atap', level: 'N4' },
             { kanji: '音', reading: 'オン / おと', meaning: 'Suara / Bunyi', level: 'N4' },
             { kanji: '歌', reading: 'カ / うた', meaning: 'Lagu / Menyanyi', level: 'N4' },
             { kanji: '画', reading: 'ガ / カク', meaning: 'Gambar / Lukisan', level: 'N4' },
             { kanji: '回', reading: 'カイ / まわる', meaning: 'Kali / Berputar', level: 'N4' },
             { kanji: '界', reading: 'カイ', meaning: 'Dunia / Batasan', level: 'N4' },
             { kanji: '開', reading: 'カイ / あける', meaning: 'Membuka', level: 'N4' },
-            { kanji: '楽', reading: 'ラク / たのしい', meaning: 'Senang / Musik / Nyaman', level: 'N4' },
-            { kanji: '館', reading: 'カン', meaning: 'Gedung / Aula / Istana', level: 'N4' },
-            { kanji: '漢', reading: 'カン', meaning: 'Cina / Karakter Kanji', level: 'N4' },
-            { kanji: '寒', reading: 'カン / さむい', meaning: 'Dingin (Cuaca)', level: 'N4' },
-            { kanji: '願', reading: 'ガン / ねがう', meaning: 'Mohon / Harapan / Doa', level: 'N4' },
+            { kanji: '楽', reading: 'ラク / たのしい', meaning: 'Senang / Musik', level: 'N4' },
+            { kanji: '館', reading: 'カン', meaning: 'Gedung / Aula', level: 'N4' },
+            { kanji: '漢', reading: 'カン', meaning: 'Cina / Kanji', level: 'N4' },
+            { kanji: '寒', reading: 'カン / さむい', meaning: 'Dingin', level: 'N4' },
+            { kanji: '願', reading: 'ガン / ねがう', meaning: 'Mohon / Harapan', level: 'N4' },
             { kanji: '顔', reading: 'ガン / かお', meaning: 'Wajah / Muka', level: 'N4' },
             { kanji: '帰', reading: 'キ / かえる', meaning: 'Pulang / Kembali', level: 'N4' },
             { kanji: '起', reading: 'キ / おきる', meaning: 'Bangun / Terjadi', level: 'N4' },
             { kanji: '究', reading: 'キュウ / きわめる', meaning: 'Penelitian', level: 'N4' },
-            { kanji: '急', reading: 'キュウ / いそぐ', meaning: 'Cepat / Terburu-buru', level: 'N4' },
+            { kanji: '急', reading: 'キュウ / いそぐ', meaning: 'Cepat / Terburu', level: 'N4' },
             { kanji: '牛', reading: 'ギュウ / うし', meaning: 'Sapi', level: 'N4' },
             { kanji: '京', reading: 'キョウ / みやこ', meaning: 'Ibukota', level: 'N4' },
             { kanji: '強', reading: 'キョウ / つよい', meaning: 'Kuat', level: 'N4' },
-            { kanji: '教', reading: 'キョウ / おしえる', meaning: 'Mengajar / Agama', level: 'N4' },
+            { kanji: '教', reading: 'キョウ / おしえる', meaning: 'Mengajar', level: 'N4' },
             { kanji: '業', reading: 'ギョウ', meaning: 'Bisnis / Pekerjaan', level: 'N4' },
             { kanji: '近', reading: 'キン / ちかい', meaning: 'Dekat', level: 'N4' },
             { kanji: '銀', reading: 'ギン', meaning: 'Perak / Bank/ATM', level: 'N4' },
@@ -392,91 +456,185 @@
             { kanji: '妹', reading: 'マイ / いもうと', meaning: 'Adik Perempuan', level: 'N4' },
             { kanji: '軽', reading: 'ケイ / かるい', meaning: 'Ringan', level: 'N4' },
             { kanji: '研', reading: 'ケン / とぐ', meaning: 'Mengasah / Riset', level: 'N4' },
-            { kanji: '県', reading: 'ケン', meaning: 'Prefektur / Provinsi', level: 'N4' },
-            { kanji: '建', reading: 'ケン / たてる', meaning: 'Membangun / Gedung', level: 'N4' },
-            { kanji: '験', reading: 'ケン', meaning: 'Ujian / Tes / Bukti', level: 'N4' },
-            { kanji: '元', reading: 'ゲン / もと', meaning: 'Asal / Sumber / Sehat', level: 'N4' },
-            { kanji: '工', reading: 'コウ / ク', meaning: 'Teknik / Konstruksi', level: 'N4' },
+            { kanji: '県', reading: 'ケン', meaning: 'Prefektur', level: 'N4' },
+            { kanji: '建', reading: 'ケン / たてる', meaning: 'Membangun', level: 'N4' },
+            { kanji: '験', reading: 'ケン', meaning: 'Ujian / Tes', level: 'N4' },
+            { kanji: '元', reading: 'ゲン / もと', meaning: 'Asal / Sehat', level: 'N4' },
+            { kanji: '工', reading: 'コウ / ク', meaning: 'Teknik', level: 'N4' },
             { kanji: '広', reading: 'コウ / ひろい', meaning: 'Luas / Lebar', level: 'N4' },
             { kanji: '考', reading: 'コウ / かんがえる', meaning: 'Berpikir', level: 'N4' },
             { kanji: '光', reading: 'コウ / ひかり', meaning: 'Cahaya', level: 'N4' },
             { kanji: '病', reading: 'ビョウ', meaning: 'Sakit / Rumah Sakit', level: 'N4' },
 
             // ================= LEVEL N3 =================
-            { kanji: '愛', reading: 'アイ / あいする', meaning: 'Cinta / Kasih sayang', level: 'N3' },
-            { kanji: '案', reading: 'アン', meaning: 'Rencana / Ide / Draf', level: 'N3' },
-            { kanji: '位', reading: 'イ / くらい', meaning: 'Peringkat / Derajat', level: 'N3' },
-            { kanji: '囲', reading: 'イ / かこむ', meaning: 'Mengelilingi / Mengepung', level: 'N3' },
-            { kanji: '委', reading: 'イ / ゆだねる', meaning: 'Komite / Mempercayakan', level: 'N3' },
-            { kanji: '易', reading: 'エキ / やさしい', meaning: 'Mudah / Gampang', level: 'N3' },
-            { kanji: '移', reading: 'イ / うつる', meaning: 'Pindah / Menggeser', level: 'N3' },
-            { kanji: '衣', reading: 'イ / ころも', meaning: 'Pakaian / Lapisan', level: 'N3' },
+            { kanji: '愛', reading: 'アイ / あいする', meaning: 'Cinta / Kasih', level: 'N3' },
+            { kanji: '案', reading: 'アン', meaning: 'Rencana / Ide', level: 'N3' },
+            { kanji: '位', reading: 'イ / くらい', meaning: 'Peringkat', level: 'N3' },
+            { kanji: '囲', reading: 'イ / かこむ', meaning: 'Mengelilingi', level: 'N3' },
+            { kanji: '委', reading: 'イ / ゆだねる', meaning: 'Komite', level: 'N3' },
+            { kanji: '易', reading: 'エキ / やさしい', meaning: 'Mudah', level: 'N3' },
+            { kanji: '移', reading: 'イ / うつる', meaning: 'Pindah', level: 'N3' },
+            { kanji: '衣', reading: 'イ / ころも', meaning: 'Pakaian', level: 'N3' },
             { kanji: '胃', reading: 'イ', meaning: 'Lambung / Perut', level: 'N3' },
-            { kanji: '違', reading: 'イ / ちがう', meaning: 'Berbeda / Salah', level: 'N3' },
-            { kanji: '因', reading: 'イン / よる', meaning: 'Penyebab / Faktor', level: 'N3' },
-            { kanji: '営', reading: 'エイ / いとなむ', meaning: 'Mengelola Bisnis', level: 'N3' },
-            { kanji: '栄', reading: 'エイ / さかえる', meaning: 'Makmur / Kejayaan', level: 'N3' },
+            { kanji: '違', reading: 'イ / ちがう', meaning: 'Berbeda', level: 'N3' },
+            { kanji: '因', reading: 'イン / よる', meaning: 'Penyebab', level: 'N3' },
+            { kanji: '営', reading: 'エイ / いとなむ', meaning: 'Mengelola', level: 'N3' },
+            { kanji: '栄', reading: 'エイ / さかえる', meaning: 'Makmur', level: 'N3' },
             { kanji: '険', reading: 'ケン / けわしい', meaning: 'Bahaya / Curam', level: 'N3' },
-            { kanji: '関', reading: 'カン / かかわる', meaning: 'Hubungan / Terkait', level: 'N3' },
-            { kanji: '局', reading: 'キョク', meaning: 'Kantor / Biro / Stasiun', level: 'N3' },
+            { kanji: '関', reading: 'カン / かかわる', meaning: 'Hubungan', level: 'N3' },
+            { kanji: '局', reading: 'キョク', meaning: 'Kantor / Biro', level: 'N3' },
             { kanji: '信', reading: 'シン', meaning: 'Percaya / Pesan', level: 'N3' },
-            { kanji: '達', reading: 'タツ / たち', meaning: 'Mencapai / Mahir', level: 'N3' },
-            { kanji: '残', reading: 'ザン / のこる', meaning: 'Sisa / Meninggalkan', level: 'N3' },
-            { kanji: '念', reading: 'ネン', meaning: 'Pikiran / Perasaan', level: 'N3' },
-            { kanji: '笑', reading: 'ショウ / わらう', meaning: 'Tersenyum / Tertawa', level: 'N3' },
-            { kanji: '法', reading: 'ホウ / ハッ', meaning: 'Hukum / Metode', level: 'N3' },
-            { kanji: '直', reading: 'チョク / なおす', meaning: 'Langsung / Memperbaiki', level: 'N3' },
+            { kanji: '達', reading: 'タツ / たち', meaning: 'Mencapai', level: 'N3' },
+            { kanji: '残', reading: 'ザン / のこる', meaning: 'Sisa', level: 'N3' },
+            { kanji: '念', reading: 'ネン', meaning: 'Perasaan', level: 'N3' },
+            { kanji: '笑', reading: 'ショウ / わらう', meaning: 'Tertawa', level: 'N3' },
+            { kanji: '法', reading: 'ホウ / ハッ', meaning: 'Hukum', level: 'N3' },
+            { kanji: '直', reading: 'チョク / なおす', meaning: 'Langsung', level: 'N3' },
             { kanji: '苦', reading: 'ク / くるしい', meaning: 'Pahit / Susah', level: 'N3' },
-            { kanji: '適', reading: 'テキ', meaning: 'Cocok / Sesuai', level: 'N3' },
-            { kanji: '確', reading: 'カク / たしか', meaning: 'Pasti / Nyata', level: 'N3' },
+            { kanji: '適', reading: 'テキ', meaning: 'Cocok', level: 'N3' },
+            { kanji: '確', reading: 'カク / たしか', meaning: 'Pasti', level: 'N3' },
             { kanji: '覚', reading: 'カク / おぼえる', meaning: 'Ingat / Sadar', level: 'N3' },
             { kanji: '側', reading: 'ソク / かわ', meaning: 'Sisi / Sebelah', level: 'N3' },
-            { kanji: '解', reading: 'カイ / とく', meaning: 'Mengerti / Solusi', level: 'N3' },
-            { kanji: '過', reading: 'カ / すぎる', meaning: 'Melewati / Berlebihan', level: 'N3' },
+            { kanji: '解', reading: 'カイ / とく', meaning: 'Solusi', level: 'N3' },
+            { kanji: '過', reading: 'カ / すぎる', meaning: 'Melewati', level: 'N3' },
             { kanji: '格', reading: 'カク', meaning: 'Status / Standar', level: 'N3' },
-            { kanji: '各', reading: 'カク / おのおの', meaning: 'Masing-masing / Setiap', level: 'N3' },
-            { kanji: '割', reading: 'カツ / わる', meaning: 'Membagi / Rasio', level: 'N3' },
-            { kanji: '感', reading: 'カン', meaning: 'Perasaan / Kesan', level: 'N3' },
-            { kanji: '管', reading: 'カン / くだ', meaning: 'Manajemen / Kontrol', level: 'N3' },
-            { kanji: '完', reading: 'カン', meaning: 'Lengkap / Selesai', level: 'N3' },
-            { kanji: '官', reading: 'カン', meaning: 'Pemerintah / Birokrat', level: 'N3' },
-            { kanji: '観', reading: 'カン / みる', meaning: 'Menonton / Pandangan', level: 'N3' },
-            { kanji: '記', reading: 'キ / しるす', meaning: 'Mencatat / Menulis', level: 'N3' },
-            { kanji: '期', reading: 'キ / ゴ', meaning: 'Periode / Jangka Waktu', level: 'N3' },
-            { kanji: '機', reading: 'キ / はた', meaning: 'Mesin / Peluang', level: 'N3' },
-            { kanji: '議', reading: 'ギ', meaning: 'Rapat / Diskusi', level: 'N3' },
-            { kanji: '求', reading: 'キュウ / もとめる', meaning: 'Meminta / Menuntut', level: 'N3' },
-            { kanji: '球', reading: 'キュウ / たま', meaning: 'Bola / Benda Bulat', level: 'N3' },
-            { kanji: '給', reading: 'キュウ', meaning: 'Gaji / Upah / Pasokan', level: 'N3' },
-            { kanji: '決', reading: 'ケツ / きめる', meaning: 'Memutuskan / Menetapkan', level: 'N3' },
-            { kanji: '結', reading: 'ケツ / むすぶ', meaning: 'Ikat / Hubung / Hasil', level: 'N3' },
-            { kanji: '件', reading: 'ケン', meaning: 'Kasus / Masalah', level: 'N3' },
-            { kanji: '権', reading: 'ケン / ゴン', meaning: 'Hak / Kekuasaan', level: 'N3' },
-            { kanji: '呼', reading: 'コ / よぶ', meaning: 'Memanggil / Bernapas', level: 'N3' }
+            { kanji: '各', reading: 'カク / おのおの', meaning: 'Setiap', level: 'N3' },
+            { kanji: '割', reading: 'カツ / わる', meaning: 'Membagi', level: 'N3' },
+            { kanji: '感', reading: 'カン', meaning: 'Perasaan', level: 'N3' },
+            { kanji: '管', reading: 'カン / くだ', meaning: 'Kontrol', level: 'N3' },
+            { kanji: '完', reading: 'カン', meaning: 'Lengkap', level: 'N3' },
+            { kanji: '官', reading: 'カン', meaning: 'Pemerintah', level: 'N3' },
+            { kanji: '観', reading: 'カン / みる', meaning: 'Menonton', level: 'N3' },
+            { kanji: '記', reading: 'キ / しるす', meaning: 'Mencatat', level: 'N3' },
+            { kanji: '期', reading: 'キ / ゴ', meaning: 'Periode', level: 'N3' },
+            { kanji: '機', reading: 'キ / はた', meaning: 'Mesin', level: 'N3' },
+            { kanji: '議', reading: 'ギ', meaning: 'Rapat', level: 'N3' },
+            { kanji: '求', reading: 'キュウ / もとめる', meaning: 'Meminta', level: 'N3' },
+            { kanji: '球', reading: 'キュウ / たま', meaning: 'Bola', level: 'N3' },
+            { kanji: '給', reading: 'キュウ', meaning: 'Gaji', level: 'N3' },
+            { kanji: '決', reading: 'ケツ / きめる', meaning: 'Memutuskan', level: 'N3' },
+            { kanji: '結', reading: 'ケツ / むすぶ', meaning: 'Ikat / Hasil', level: 'N3' },
+            { kanji: '件', reading: 'ケン', meaning: 'Kasus', level: 'N3' },
+            { kanji: '権', reading: 'ケン / ゴン', meaning: 'Hak', level: 'N3' },
+            { kanji: '呼', reading: 'コ / よぶ', meaning: 'Memanggil', level: 'N3' }
         ];
 
+        let p1Name = "Pemain 1";
+        let p2Name = "Pemain 2";
         let currentData = [];
         let currentQuestion = null;
         let scorePosition = 0; 
         const MAX_STEPS = 6; 
         let isAnswering = false;
+        let timerInterval = null;
+        let timeLeft = 6;
+
+        let audioCtx = null;
+        let bgmInterval = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playSFX(type) {
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                const now = audioCtx.currentTime;
+
+                if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(90, now + 0.2);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(600, now);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                }
+            } catch(e) {}
+        }
+
+        function startBGM() {
+            stopBGM();
+            let notes = [220, 246.94, 277.18, 329.63, 369.99, 440];
+            let step = 0;
+            bgmInterval = setInterval(() => {
+                try {
+                    initAudio();
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                    step++;
+                } catch(e) {}
+            }, 400);
+        }
+
+        function stopBGM() {
+            if (bgmInterval) {
+                clearInterval(bgmInterval);
+                bgmInterval = null;
+            }
+        }
 
         function switchScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
         }
 
-        function startGame(level) {
+        function initGameSession() {
+            playSFX('click');
+            p1Name = document.getElementById('player1-name').value.trim() || "Pemain 1";
+            p2Name = document.getElementById('player2-name').value.trim() || "Pemain 2";
+            const level = document.getElementById('game-level').value;
+
+            document.getElementById('p1-title-label').innerText = p1Name;
+            document.getElementById('p2-title-label').innerText = p2Name;
+
             currentData = kanjiDatabase.filter(k => k.level === level);
             document.getElementById('level-indicator').innerText = `DUEL LEVEL ${level}`;
             scorePosition = 0;
             updateArena();
             switchScreen('game-screen');
+            startBGM();
             loadNextQuestion();
         }
 
         function loadNextQuestion() {
             isAnswering = false;
+            clearInterval(timerInterval);
+            timeLeft = 6;
+            updateTimerDisplay();
+
             const correctIndex = Math.floor(Math.random() * currentData.length);
             currentQuestion = currentData[correctIndex];
 
@@ -508,13 +666,33 @@
                 btn2.onclick = () => handleAnswer(2, opt.kanji);
                 p2Container.appendChild(btn2);
             });
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    loadNextQuestion();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById('timer-display').innerText = `⏱️ 0${timeLeft}s`;
         }
 
         function handleAnswer(player, selectedKanji) {
             if (isAnswering) return; 
             isAnswering = true;
+            clearInterval(timerInterval);
 
             const isCorrect = (selectedKanji === currentQuestion.kanji);
+
+            if (isCorrect) {
+                playSFX('correct');
+            } else {
+                playSFX('wrong');
+            }
 
             if (player === 1) {
                 scorePosition += isCorrect ? -1 : 1; 
@@ -541,26 +719,31 @@
         }
 
         function endGame(winner) {
+            stopBGM();
             switchScreen('result-screen');
             const resultMsg = document.getElementById('result-message');
             if (winner === 1) {
-                resultMsg.innerText = "🏁 PEMAIN 1 (BIRU) MENANG! 🏁";
+                resultMsg.innerText = `🏁 ${p1Name.toUpperCase()} MENANG! 🏁`;
                 resultMsg.style.color = "#3b82f6";
             } else {
-                resultMsg.innerText = "🏁 PEMAIN 2 (MERAH) MENANG! 🏁";
+                resultMsg.innerText = `🏁 ${p2Name.toUpperCase()} MENANG! 🏁`;
                 resultMsg.style.color = "#ef4444";
             }
         }
 
         function resetGame() {
+            playSFX('click');
             if (currentData.length > 0) {
-                startGame(currentData[0].level);
+                initGameSession();
             } else {
-                switchScreen('menu-screen');
+                backToMenu();
             }
         }
 
         function backToMenu() {
+            playSFX('click');
+            stopBGM();
+            clearInterval(timerInterval);
             switchScreen('menu-screen');
         }
     </script>
